@@ -1,7 +1,8 @@
 let stars = [];
+let yoff = 0.0;
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(1200, 700);
 
   for(let i = 0; i < 500; i++) {
     stars[i] = new Star();
@@ -21,6 +22,8 @@ function draw() {
   for(let i = 0; i < stars.length; i++) {
     stars[i].show();
   }
+
+  wave1();
 }
 
 function verticalGradientRect(x, y, w, h, startColor, stopColor) {
@@ -68,4 +71,21 @@ class Star {
     noStroke();
     ellipse(this.x, this.y, scale, scale);
   }
+}
+
+function wave1() {
+  fill(29, 56, 99, 90);
+  beginShape();
+
+  let xoff = 0;
+  for(let x = 0; x <= width; x += 10) {
+    let y = map(noise(xoff, yoff), 0, 1, 400, 500);
+    vertex(x, y);
+    xoff += 0.05;
+  }
+
+  yoff += 0.01;
+  vertex(width, height);
+  vertex(0, height);
+  endShape(CLOSE);
 }
