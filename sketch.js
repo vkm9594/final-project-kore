@@ -24,6 +24,8 @@ function draw() {
   }
 
   wave1();
+  wave2();
+  wave3();
 }
 
 function verticalGradientRect(x, y, w, h, startColor, stopColor) {
@@ -80,6 +82,40 @@ function wave1() {
   let xoff = 0;
   for(let x = 0; x <= width; x += 10) {
     let y = map(noise(xoff, yoff), 0, 1, 400, 500);
+    vertex(x, y);
+    xoff += 0.05;
+  }
+
+  yoff += 0.01;
+  vertex(width, height);
+  vertex(0, height);
+  endShape(CLOSE);
+}
+
+function wave2() {
+  fill(29, 56, 99, 90);
+  beginShape();
+
+  let xoff = 0;
+  for(let x = 0; x <= width; x += 10) {
+    let y = map(noise(xoff, yoff), 0, 1, 450, 550);
+    vertex(x, y);
+    xoff += 0.05;
+  }
+
+  yoff += 0.01;
+  vertex(width, height);
+  vertex(0, height);
+  endShape(CLOSE);
+}
+
+function wave3() {
+  fill(29, 56, 99, 90);
+  beginShape();
+
+  let xoff = 0;
+  for(let x = 0; x <= width; x += 10) {
+    let y = map(noise(xoff, yoff), 0, 1, 550, 650);
     vertex(x, y);
     xoff += 0.05;
   }
