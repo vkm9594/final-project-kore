@@ -4,7 +4,7 @@ let yoff = 0.0;
 function setup() {
   createCanvas(1200, 700);
 
-  for(let i = 0; i < 500; i++) {
+  for (let i = 0; i < 500; i++) {
     stars[i] = new Star();
   }
 }
@@ -12,26 +12,31 @@ function setup() {
 function draw() {
   background(0);
 
-  startColor = color(51, 58, 135);
-  stopColor = color(122, 51, 135);
+  // startColor = color(51, 58, 135);
+  // stopColor = color(122, 51, 135);
+  startColor = color(0, 145, 212);
+  stopColor = color(247, 245, 163);
   verticalGradientRect(0, 0, 1200, 700, startColor, stopColor);
-  
+
   moon();
 
   // calls class Star
-  for(let i = 0; i < stars.length; i++) {
+  for (let i = 0; i < stars.length; i++) {
     stars[i].show();
   }
 
+  // draws the waves
   wave1();
   wave2();
   wave3();
+
+  grassPlatform();
 }
 
 function verticalGradientRect(x, y, w, h, startColor, stopColor) {
   push();
   strokeWeight(1);
-  for(let i = 0; i < h; i++) {
+  for (let i = 0; i < h; i++) {
     stroke(lerpColor(startColor, stopColor, i / (h - 1)));
     line(x, y + i, w + x, y + i);
   }
@@ -76,12 +81,12 @@ class Star {
 }
 
 function wave1() {
-  fill(29, 56, 99, 90);
+  fill(22, 70, 224, 90);
   beginShape();
 
   let xoff = 0;
-  for(let x = 0; x <= width; x += 10) {
-    let y = map(noise(xoff, yoff), 0, 1, 400, 500);
+  for (let x = 0; x <= width; x += 10) {
+    let y = map(noise(xoff, yoff), 0, 1, 400, 450);
     vertex(x, y);
     xoff += 0.05;
   }
@@ -93,12 +98,11 @@ function wave1() {
 }
 
 function wave2() {
-  fill(29, 56, 99, 90);
   beginShape();
 
   let xoff = 0;
-  for(let x = 0; x <= width; x += 10) {
-    let y = map(noise(xoff, yoff), 0, 1, 450, 550);
+  for (let x = 0; x <= width; x += 10) {
+    let y = map(noise(xoff, yoff), 0, 1, 450, 500);
     vertex(x, y);
     xoff += 0.05;
   }
@@ -110,12 +114,11 @@ function wave2() {
 }
 
 function wave3() {
-  fill(29, 56, 99, 90);
   beginShape();
 
   let xoff = 0;
-  for(let x = 0; x <= width; x += 10) {
-    let y = map(noise(xoff, yoff), 0, 1, 550, 650);
+  for (let x = 0; x <= width; x += 10) {
+    let y = map(noise(xoff, yoff), 0, 1, 550, 600);
     vertex(x, y);
     xoff += 0.05;
   }
@@ -124,4 +127,9 @@ function wave3() {
   vertex(width, height);
   vertex(0, height);
   endShape(CLOSE);
+}
+
+function grassPlatform() {
+  fill('green');
+  ellipse(width / 2, 500, 500, 120);
 }
