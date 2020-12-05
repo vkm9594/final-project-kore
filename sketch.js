@@ -1,21 +1,12 @@
 let stars = [];
 let yoff = 0.0;
 
-let root;
-let tree = [];
-
 function setup() {
   createCanvas(1200, 700);
 
   for (let i = 0; i < 500; i++) {
     stars[i] = new Star();
   }
-
-  var a = createVector(400, 500);
-  var b = createVector(400, 400);
-  root = new Branch(a, b);
-  tree[0] = root;
-
 }
 
 function draw() {
@@ -40,20 +31,6 @@ function draw() {
   wave3();
 
   grassPlatform();
-
-  for (let i = 0; i < tree.length; i++) {
-    tree[i].show();
-  }
-}
-
-function mousePressed() {
-  for (let i = tree.length - 1; i >= 0; i--) {
-    if (!tree[i].finished) {
-      tree.push(tree[i].branchA());
-      tree.push(tree[i].branchB());
-    }
-    tree[i].finished = true;
-  }
 }
 
 function verticalGradientRect(x, y, w, h, startColor, stopColor) {
@@ -91,7 +68,7 @@ class Star {
     this.x = random(0, 1200);
     this.y = random(0, 350);
     this.size = random(0.25, 2);
-    this.t = random(TWO_PI);
+    this.t = random(TAU); //TWO_PI
   }
 
   show() {
