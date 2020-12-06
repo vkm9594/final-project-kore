@@ -2,6 +2,12 @@ let stars = [];
 let yoff = 0.0;
 let root;
 let tree = [];
+let kore;
+let sprite;
+
+function preload() {
+  sprite = loadImage("kore.png");
+}
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -10,10 +16,12 @@ function setup() {
     stars[i] = new Star();
   }
 
-  var a = createVector(mouseX, mouseY);
-  var b = createVector(mouseX, mouseY - 100);
+  var a = createVector(800, 500);
+  var b = createVector(800, 400);
   root = new Branch(a, b);
   tree[0] = root;
+
+  kore = new Character();
 }
 
 function draw() {
@@ -42,7 +50,9 @@ function draw() {
   for (let i = 0; i < tree.length; i++) {
     tree[i].show();
   }
-  tree[0].mousePressed();
+  //tree[0].mousePressed();
+
+  kore.show();
 }
 
 function mousePressed() { //adds new branches every time the mouse is pressed
