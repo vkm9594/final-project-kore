@@ -4,14 +4,14 @@ let root;
 let tree = [];
 
 function setup() {
-  createCanvas(1200, 700);
+  createCanvas(windowWidth, windowHeight);
 
   for (let i = 0; i < 500; i++) {
     stars[i] = new Star();
   }
 
-  var a = createVector(400, 500);
-  var b = createVector(400, 400);
+  var a = createVector(mouseX, mouseY);
+  var b = createVector(mouseX, mouseY - 100);
   root = new Branch(a, b);
   tree[0] = root;
 }
@@ -23,7 +23,7 @@ function draw() {
   // stopColor = color(122, 51, 135);
   startColor = color(0, 145, 212);
   stopColor = color(247, 245, 163);
-  verticalGradientRect(0, 0, 1200, 700, startColor, stopColor);
+  verticalGradientRect(0, 0, windowWidth, windowHeight, startColor, stopColor);
 
   moon();
 
@@ -42,9 +42,10 @@ function draw() {
   for (let i = 0; i < tree.length; i++) {
     tree[i].show();
   }
+  tree[0].mousePressed();
 }
 
-function mousePressed() {
+function mousePressed() { //adds new branches every time the mouse is pressed
   for (let i = tree.length - 1; i >= 0; i--) {
     if (!tree[i].finished) {
       tree.push(tree[i].branchA());
@@ -54,7 +55,7 @@ function mousePressed() {
   }
 }
 
-function verticalGradientRect(x, y, w, h, startColor, stopColor) {
+function verticalGradientRect(x, y, w, h, startColor, stopColor) { //gradient for the background
   push();
   strokeWeight(1);
   for (let i = 0; i < h; i++) {
@@ -73,8 +74,7 @@ function moon() {
   push();
   translate(210, 230);
   scale(2.5, 2.5);
-  angleMode(DEGREES);
-  rotate(180);
+  rotate(PI);
   beginShape();
   vertex(30, 20);
   bezierVertex(80, 20, 80, 75, 30, 75);
@@ -86,7 +86,7 @@ function moon() {
 // draws stars
 class Star {
   constructor() {
-    this.x = random(0, 1200);
+    this.x = random(width);
     this.y = random(0, 350);
     this.size = random(0.25, 2);
     this.t = random(TAU); //TWO_PI
@@ -153,4 +153,8 @@ function wave3() {
 function grassPlatform() {
   fill('green');
   ellipse(width / 2, 500, 500, 120);
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
 }
