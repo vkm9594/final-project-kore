@@ -9,8 +9,11 @@ let notes = [ 60, 62, 64, 65, 67, 69, 71, 72];
 let index = 0;
 let trigger = 0;
 let osc;
+let soundClassifier;
 
 function preload() {
+  const options = { probabilityThreshold: 0.7 };
+  soundClassifier = ml5.soundClassifier('SpeechCommands18w', options, setup);
   sprite = loadImage("kore.png");
   screen = 0;
 }
@@ -33,6 +36,16 @@ function setup() {
   osc = new p5.TriOsc();
   osc.start();
   osc.amp(0);
+  soundClassifier.classify(gotResult);
+}
+
+function gotResult(error, results) {
+  if(error) {
+    console.log(error);
+  }
+  if(results == 'one') {
+    console.log(results, soundClassifier.confidence);
+  }
 }
 
 function windowResized() {
