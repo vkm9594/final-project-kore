@@ -7,7 +7,7 @@ class Character {
         push();
         scale(0.2);
         translate()
-        image(sprite, width / 2 * 5, height / 2 * 4);
+        image(sprite, width / 2 * 5, height / 2 * 6);
         pop();
     }
 }

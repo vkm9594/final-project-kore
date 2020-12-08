@@ -3,6 +3,7 @@ class Branch {
         this.begin = begin;
         this.end = end;
         this.finished = false;
+        this.x = 0.75;
 
         this.branchA = function () {
             let dir = p5.Vector.sub(this.end, this.begin);
@@ -37,7 +38,7 @@ class Branch {
 
     show() {
         stroke(255);
-        strokeWeight(4);
+        strokeWeight(2);
         line(this.begin.x, this.begin.y, this.end.x, this.end.y);
     }
 }
