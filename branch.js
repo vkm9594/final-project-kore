@@ -24,14 +24,6 @@ class Branch {
         }
     }
 
-    // mousePressed() { //testing
-    //     if (mouseIsPressed == true) {
-    //         stroke(255);
-    //         strokeWeight(4);
-    //         line(this.begin.x, this.begin.y, this.end.x, this.end.y);
-    //     } 
-    // }
-
     update() {
 
     }

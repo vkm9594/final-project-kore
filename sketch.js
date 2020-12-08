@@ -5,14 +5,16 @@ let root;
 let tree = [];
 let kore;
 let sprite;
-let notes = [ 60, 62, 64, 65, 67, 69, 71, 72];
+let notes = [60, 62, 64, 65, 67, 69, 71, 72];
 let index = 0;
 let trigger = 0;
 let osc;
 let soundClassifier;
 
 function preload() {
-  const options = { probabilityThreshold: 0.7 };
+  const options = {
+    probabilityThreshold: 0.7
+  };
   soundClassifier = ml5.soundClassifier('SpeechCommands18w', options, setup);
   sprite = loadImage("kore.png");
   screen = 0;
@@ -40,10 +42,10 @@ function setup() {
 }
 
 function gotResult(error, results) {
-  if(error) {
+  if (error) {
     console.log(error);
   }
-  if(results == 'one') {
+  if (results == 'one') {
     console.log(results, soundClassifier.confidence);
   }
 }
@@ -55,39 +57,38 @@ function windowResized() {
 function playNote(note, duration) {
   osc.freq(midiToFreq(note));
   osc.fade(0.5, 0.2);
-  if(duration) {
-    setTimeout(function() {
-      osc.fate(0, 0.2); 
+  if (duration) {
+    setTimeout(function () {
+      osc.fade(0, 0.2);
     }, duration - 50);
   }
 }
 
 function draw() {
   background(0);
-  // if (screen == 0) {
-  //   textSize(72);
-  //   fill(255);
-  //   text("KORE", width / 2 - 100, height / 2);
-  //   textSize(24);
-  //   text("Press a key to begin", width / 2 -110, height / 2 + 50);
-  // }
-
   if (screen == 0) {
-    let w = width / notes.length;
-    for(let i = 0; i < notes.length; i++) {
-      let x = i * w;
-      if(mouseX > x && mouseX < x + w && mouseY < height) {
-        if(mouseIsPressed) {
-          fill(100, 255, 200);
-        } else { 
-          fill(127);
-        }
-      } else {
-        fill(200);
-      }
-      rect (x, 0, w - 1, height - 1);
-    }
+    textSize(72);
+    fill(255);
+    text("KORE", width / 2 - 100, height / 2);
+    textSize(24);
+    text("Press enter to begin", width / 2 - 110, height / 2 + 50);
   }
+
+  if (screen == 1) {
+    // let w = width / notes.length;
+    // for (let i = 0; i < notes.length; i++) {
+    //   let x = i * w;
+    //   if (mouseX > x && mouseX < x + w && mouseY < height) {
+    //     if (mouseIsPressed) {
+    //       fill(100, 255, 200);
+    //     } else {
+    //       fill(127);
+    //     }
+    //   } else {
+    //     fill(200);
+    //   }
+    //   rect(x, 0, w - 1, height - 1);
+    // }
     // startColor = color(51, 58, 135);
     // stopColor = color(122, 51, 135);
     startColor = color(0, 145, 212);
@@ -111,7 +112,7 @@ function draw() {
     for (let i = 0; i < tree.length; i++) {
       tree[i].show();
     }
-    //tree[0].mousePressed();
+
     kore.show();
     // let w = width / notes.length;
     // for(let i = 0; i < notes.length; i++) {
@@ -127,15 +128,18 @@ function draw() {
     //   }
     //   rect (x, 0, w - 1, height - 1);
     // }
-  //}
+    //}
+  }
 }
 
 function keyPressed() {
-  screen = 1;
+  if (keyCode === ENTER) {
+    screen = 1;
+  }
 }
 
 function mousePressed(event) {
-  if(event.button == 0 && event.clientX < width && event.clientY < height) {
+  if (event.button == 0 && event.clientX < width && event.clientY < height) {
     let key = floor(map(mouseX, 0, width, 0, notes.length));
     playNote(notes[key]);
   }
@@ -145,12 +149,12 @@ function mouseReleased() {
   osc.fade(0, 0.5);
 }
 
-// function mousePressed() { //adds new branches every time the mouse is pressed
-//   for (let i = tree.length - 1; i >= 0; i--) {
-//     if (!tree[i].finished) {
-//       tree.push(tree[i].branchA());
-//       tree.push(tree[i].branchB());
-//     }
-//     tree[i].finished = true;
-//   }
-// }
+function mousePressed() { //adds new branches every time the mouse is pressed
+  for (let i = tree.length - 1; i >= 0; i--) {
+    if (!tree[i].finished) {
+      tree.push(tree[i].branchA());
+      tree.push(tree[i].branchB());
+    }
+    tree[i].finished = true;
+  }
+}
