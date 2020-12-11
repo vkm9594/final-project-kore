@@ -92,8 +92,12 @@ function verticalGradientRect(x, y, w, h, startColor, stopColor) { //gradient fo
     vertex(0, height);
     endShape(CLOSE);
   }
-  
-  function grassPlatform() {
-    fill('green');
-    ellipse(width / 2, 600, 500, 120);
-  }
+
+  // function grassField() {
+  //   for(let i = 0; i < width; i++ ) {
+  //     strokeWeight(3);
+  //     stroke(86, 184, 93);
+  //     line(i, height, i, random(650, 660));
+  //   }
+  //   noLoop();
+  // }
