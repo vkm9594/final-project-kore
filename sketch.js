@@ -32,8 +32,8 @@ function setup() {
     stars[i] = new Star();
   }
 
-  var a = createVector(700, height);
-  var b = createVector(700, height - 200);
+  var a = createVector(width / 2, height);
+  var b = createVector(width / 2, height - 200);
   root = new Branch(a, b);
   tree[0] = root;
 

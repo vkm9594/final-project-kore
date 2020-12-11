@@ -52,7 +52,7 @@ function verticalGradientRect(x, y, w, h, startColor, stopColor) { //gradient fo
     for (let x = 0; x <= width; x += 10) {
       let y = map(noise(xoff, yoff), 0, 1, 500, 550);
       vertex(x, y);
-      xoff += 0.05;
+      xoff += 0.02;
     }
   
     yoff += 0.01;
@@ -68,7 +68,7 @@ function verticalGradientRect(x, y, w, h, startColor, stopColor) { //gradient fo
     for (let x = 0; x <= width; x += 10) {
       let y = map(noise(xoff, yoff), 0, 1, 550, 600);
       vertex(x, y);
-      xoff += 0.05;
+      xoff += 0.02;
     }
   
     yoff += 0.01;
@@ -84,7 +84,7 @@ function verticalGradientRect(x, y, w, h, startColor, stopColor) { //gradient fo
     for (let x = 0; x <= width; x += 10) {
       let y = map(noise(xoff, yoff), 0, 1, 600, 650);
       vertex(x, y);
-      xoff += 0.05;
+      xoff += 0.02;
     }
   
     yoff += 0.01;
