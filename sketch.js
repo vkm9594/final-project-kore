@@ -1,5 +1,5 @@
 var screen = 0;
-let button;
+let fade = 0;
 let stars = [];
 let grass = [];
 var yoff = 0.0;
@@ -33,16 +33,7 @@ function setup() {
   for (let i = 0; i < 500; i++) {
     stars[i] = new Star();
   }
-
-  // var a = createVector(width / 2, height);
-  // var b = createVector(width / 2, height - 200);
-  // root = new Branch(a, b);
-  // tree[0] = root;
-
-  // button = createButton("reset");
-  // button.position(width / 2, 20);
-  // button.mouseClicked(mousePressed);
-
+ 
   kore = new Character();
 
   osc = new p5.TriOsc();
@@ -63,6 +54,11 @@ function gotResult(error, results) {
     tree[0] = root;
     console.log(results[0].label, results[0].confidence)
   }
+  if(results[0].label === 'down') {
+    for(let i = 0; i < flowers.length; i++) {
+      flowers[i].y += random(0, 3);
+    }
+  }
 }
 
 function windowResized() {
@@ -81,15 +77,17 @@ function playNote(note, duration) {
 
 function draw() {
   background(0);
-  // if (screen == 0) {
-  //   textSize(72);
-  //   fill(255);
-  //   text("KORE", width / 2 - 100, height / 2);
-  //   textSize(24);
-  //   text("Press enter to begin", width / 2 - 110, height / 2 + 50);
-  // }
-
   if (screen == 0) {
+    textSize(150);
+    textFont("megrim");
+    fill(255, 255, 255, fade);
+    fade++;
+    text("Kore", width / 2 - 180, height / 2);
+    textSize(24);
+    text("Press enter to begin", width / 2 - 135, height / 2 + 50);
+  }
+
+  if (screen == 1) {
     startColor = color(0, 145, 212);
     stopColor = color(247, 245, 163);
     verticalGradientRect(0, 0, windowWidth, windowHeight, startColor, stopColor);
