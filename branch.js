@@ -3,10 +3,11 @@ class Branch {
         this.begin = begin;
         this.end = end;
         this.finished = false;
-        this.angle = random(PI / 6, PI / 3);
-        this.thickness = 8;
+        this.angle = random(PI / 6, PI / 4);
+        this.thickness = 10;
         this.length = 2;
         this.maxLength = maxLength;
+        this.grow = 2;
 
         this.branchA = function () {
             let dir = p5.Vector.sub(this.end, this.begin);
@@ -35,15 +36,15 @@ class Branch {
         let newMaxLength = this.maxLength * random(0.6, 0.8);
         let newThickness = 0.8 * this.thickness;
 
-        for(let i = 1; i < numberOfBranches; i++) {
+        for (let i = 1; i < numberOfBranches; i++) {
             let newAngle = random(-PI / 4, PI / 4) + this.angle;
             newBranches = new Branch(newAngle, newMaxLength, newThickness);
         }
         return newBranches;
     }
 
-    grow() {
-        
+    growBranches() {
+
     }
 
     drawBranch() {
@@ -58,7 +59,7 @@ class Branch {
 
     show() {
         stroke(255);
-        strokeWeight(2);
+        strokeWeight(this.thickness);
         line(this.begin.x, this.begin.y, this.end.x, this.end.y);
     }
 }

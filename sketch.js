@@ -1,4 +1,5 @@
 var screen = 0;
+let button;
 let stars = [];
 let grass = [];
 var yoff = 0.0;
@@ -13,6 +14,7 @@ let index = 0;
 let trigger = 0;
 let osc;
 let soundClassifier;
+let count = 0;
 
 function preload() {
   const options = {
@@ -28,6 +30,11 @@ function setup() {
   screen = 0;
   createCanvas(windowWidth - 2, windowHeight - 3);
 
+  push();
+  translate(20, height / 2)
+  button = createButton("reset");
+  pop();
+
   for (let i = 0; i < 500; i++) {
     stars[i] = new Star();
   }
@@ -36,6 +43,9 @@ function setup() {
   var b = createVector(width / 2, height - 200);
   root = new Branch(a, b);
   tree[0] = root;
+
+  // root = new Branch();
+  // tree[0] = root;
 
   kore = new Character();
 
@@ -79,42 +89,26 @@ function draw() {
   // }
 
   if (screen == 0) {
-    // let w = width / notes.length;
-    // for (let i = 0; i < notes.length; i++) {
-    //   let x = i * w;
-    //   if (mouseX > x && mouseX < x + w && mouseY < height) {
-    //     if (mouseIsPressed) {
-    //       fill(100, 255, 200);
-    //     } else {
-    //       fill(127);
-    //     }
-    //   } else {
-    //     fill(200);
-    //   }
-    //   rect(x, 0, w - 1, height - 1);
-    // }
-    // startColor = color(51, 58, 135);
-    // stopColor = color(122, 51, 135);
     startColor = color(0, 145, 212);
     stopColor = color(247, 245, 163);
     verticalGradientRect(0, 0, windowWidth, windowHeight, startColor, stopColor);
     moon();
-    // calls class Star
-    for (let i = 0; i < stars.length; i++) {
+
+    for (let i = 0; i < stars.length; i++) { //calls class Star in background.js
       stars[i].show();
     }
+
     // draws the waves
     wave1();
     wave2();
     wave3();
-    // grassField();
 
     for (let i = 0; i < tree.length; i++) {
       tree[i].show();
     }
 
-    kore.update();
-    kore.show();
+    // kore.update();
+    // kore.show();
   }
 }
 
@@ -131,17 +125,19 @@ function keyPressed() {
 //   }
 // }
 
-// function mouseReleased() {
-//   osc.fade(0, 0.5);
-// }
+function mouseReleased() {
+  osc.fade(0, 0.5);
+}
 
 function mousePressed() { //adds new branches every time the mouse is pressed
-  console.log("PRESSED");
   for (let i = tree.length - 1; i >= 0; i--) {
     if (!tree[i].finished) {
       tree.push(tree[i].branchA());
       tree.push(tree[i].branchB());
+      console.log(notes[i])
     }
     tree[i].finished = true;
+    let key = floor(map(mouseY, height, 0, 0, notes.length));
+    playNote(notes[key]);
   }
 }

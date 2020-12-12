@@ -6,15 +6,18 @@ class Character {
     }
 
     update() {
-        if(this.x < width / 2 * 5) {
-        this.x += this.speed;
+        if (this.x < width / 2 * 5) {
+            this.x += this.speed;
         } else {
             this.x = width / 2 * 5;
         }
-        
-        let xoff = 0;
-        let yoff = 0;
-        yoff += 0.05;
+
+        // let xoff = 0;
+        // let yoff = 0;
+        // yoff += 0.05;
+        // let move = map(noise(xoff, yoff), 0, 1, 500, 550);
+        // xoff += 0.02;
+        // yoff += 0.01;
         this.y += random(-2, 2);
     }
 
