@@ -5,20 +5,20 @@ let grass = [];
 var yoff = 0.0;
 let root;
 let tree = [];
-let leaves = [];
+let flowers = [];
 let kore;
 let sprite;
 let boat;
 let notes = [60, 62, 64, 65, 67, 69, 71, 72];
-let index = 0;
-let trigger = 0;
+var index = 0;
+var trigger = 0;
 let osc;
 let soundClassifier;
-let count = 0;
+var count = 0;
 
 function preload() {
   const options = {
-    probabilityThreshold: 0.7
+    probabilityThreshold: 0.9
   };
   soundClassifier = ml5.soundClassifier('SpeechCommands18w', options, setup);
   sprite = loadImage("images/kore.gif");
@@ -30,22 +30,18 @@ function setup() {
   screen = 0;
   createCanvas(windowWidth - 2, windowHeight - 3);
 
-  push();
-  translate(20, height / 2)
-  button = createButton("reset");
-  pop();
-
   for (let i = 0; i < 500; i++) {
     stars[i] = new Star();
   }
 
-  var a = createVector(width / 2, height);
-  var b = createVector(width / 2, height - 200);
-  root = new Branch(a, b);
-  tree[0] = root;
-
-  // root = new Branch();
+  // var a = createVector(width / 2, height);
+  // var b = createVector(width / 2, height - 200);
+  // root = new Branch(a, b);
   // tree[0] = root;
+
+  // button = createButton("reset");
+  // button.position(width / 2, 20);
+  // button.mouseClicked(mousePressed);
 
   kore = new Character();
 
@@ -59,8 +55,13 @@ function gotResult(error, results) {
   if (error) {
     console.log(error);
   }
-  if (results == 'one') {
-    console.log(results, soundClassifier.confidence);
+    // console.log(results, soundClassifier.confidence);
+  if (results[0].label === 'go') {
+    var a = createVector(width / 2, height);
+    var b = createVector(width / 2, height - 200);
+    root = new Branch(a, b);
+    tree[0] = root;
+    console.log(results[0].label, results[0].confidence)
   }
 }
 
@@ -107,6 +108,11 @@ function draw() {
       tree[i].show();
     }
 
+    for (let i = 0; i < flowers.length; i++) {
+      fill(255, 0, 100);
+      ellipse(flowers[i].x, flowers[i].y, 10, 10);
+    }
+
     // kore.update();
     // kore.show();
   }
@@ -134,10 +140,21 @@ function mousePressed() { //adds new branches every time the mouse is pressed
     if (!tree[i].finished) {
       tree.push(tree[i].branchA());
       tree.push(tree[i].branchB());
-      console.log(notes[i])
+      //console.log(tree[i]);
     }
     tree[i].finished = true;
+  
     let key = floor(map(mouseY, height, 0, 0, notes.length));
     playNote(notes[key]);
+  }
+  count++;
+
+  if (count === 8) {
+    for (let i = 0; i < tree.length; i++) {
+      if (!tree[i].finished) {
+        let flower = tree[i].end.copy();
+        flowers.push(flower);
+      }
+    }
   }
 }
