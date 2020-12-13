@@ -2,7 +2,7 @@ class Character {
     constructor() {
         this.x = 0;
         this.y = height / 2;
-        this.speed = 2;
+        this.speed = 5;
     }
 
     update() {
@@ -10,6 +10,10 @@ class Character {
             this.x += this.speed;
         } else {
             this.x = width / 2 * 5;
+
+            fill(208, 242, 217, fadeIn);
+            fadeIn++;
+            text("Grow! She shouts", 100, height / 2 + 50);
         }
 
         // let xoff = 0;
@@ -18,7 +22,7 @@ class Character {
         // let move = map(noise(xoff, yoff), 0, 1, 500, 550);
         // xoff += 0.02;
         // yoff += 0.01;
-        this.y += random(-2, 2);
+        //this.y += random(-2, 2);
     }
 
     show() {

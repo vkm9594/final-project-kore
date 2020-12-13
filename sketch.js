@@ -1,5 +1,9 @@
 var screen = 0;
-let fade = 0;
+var fadeIn = 0;
+var fadeOut = 255;
+let bgMusic;
+let treeGrowSound;
+let treeDoneSound;
 let stars = [];
 let grass = [];
 var yoff = 0.0;
@@ -9,14 +13,14 @@ let flowers = [];
 let kore;
 let sprite;
 let boat;
-let notes = [60, 62, 64, 65, 67, 69, 71, 72];
-var index = 0;
-var trigger = 0;
-let osc;
 let soundClassifier;
 var count = 0;
 
 function preload() {
+  soundFormats('ogg', 'mp3');
+  bgMusic = loadSound("sounds/background-music.mp3");
+  treeGrowSound = loadSound("sounds/tree-growing.mp3");
+  treeDoneSound = loadSound("sounds/tree-grown.mp3");
   const options = {
     probabilityThreshold: 0.9
   };
@@ -29,34 +33,30 @@ function preload() {
 function setup() {
   screen = 0;
   createCanvas(windowWidth - 2, windowHeight - 3);
+  textFont("megrim");
 
   for (let i = 0; i < 500; i++) {
     stars[i] = new Star();
   }
- 
   kore = new Character();
-
-  osc = new p5.TriOsc();
-  osc.start();
-  osc.amp(0);
   soundClassifier.classify(gotResult);
 }
 
 function gotResult(error, results) {
   if (error) {
-    console.log(error);
+    console.log('ERROR');
   }
-    // console.log(results, soundClassifier.confidence);
   if (results[0].label === 'go') {
     var a = createVector(width / 2, height);
     var b = createVector(width / 2, height - 200);
     root = new Branch(a, b);
     tree[0] = root;
     console.log(results[0].label, results[0].confidence)
-  }
-  if(results[0].label === 'down') {
-    for(let i = 0; i < flowers.length; i++) {
+  } 
+  if (results[0].label === 'down') {
+    for (let i = 0; i < flowers.length; i++) {
       flowers[i].y += random(0, 3);
+      console.log(results[0].label, results[0].confidence);
     }
   }
 }
@@ -65,23 +65,12 @@ function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
 
-function playNote(note, duration) {
-  osc.freq(midiToFreq(note));
-  osc.fade(0.5, 0.2);
-  if (duration) {
-    setTimeout(function () {
-      osc.fade(0, 0.2);
-    }, duration - 50);
-  }
-}
-
 function draw() {
-  background(0);
+  background(142, 188, 113);
   if (screen == 0) {
     textSize(150);
-    textFont("megrim");
-    fill(255, 255, 255, fade);
-    fade++;
+    fill(255, 255, 255, fadeIn);
+    fadeIn++;
     text("Kore", width / 2 - 180, height / 2);
     textSize(24);
     text("Press enter to begin", width / 2 - 135, height / 2 + 50);
@@ -97,6 +86,10 @@ function draw() {
       stars[i].show();
     }
 
+    fill(208, 242, 217, fadeIn);
+    fadeIn += 0.5;
+    text("Lost at sea with no trees", 50, height / 2);
+
     // draws the waves
     wave1();
     wave2();
@@ -111,26 +104,18 @@ function draw() {
       ellipse(flowers[i].x, flowers[i].y, 10, 10);
     }
 
-    // kore.update();
-    // kore.show();
+    kore.update();
+    kore.show();
   }
 }
 
 function keyPressed() {
   if (keyCode === ENTER) {
     screen = 1;
+    bgMusic.setVolume(0.1);
+    bgMusic.play();
+    bgMusic.loop();
   }
-}
-
-// function mousePressed(event) {
-//   if (event.button == 0 && event.clientX < width && event.clientY < height) {
-//     let key = floor(map(mouseX, 0, width, 0, notes.length));
-//     playNote(notes[key]);
-//   }
-// }
-
-function mouseReleased() {
-  osc.fade(0, 0.5);
 }
 
 function mousePressed() { //adds new branches every time the mouse is pressed
@@ -141,9 +126,9 @@ function mousePressed() { //adds new branches every time the mouse is pressed
       //console.log(tree[i]);
     }
     tree[i].finished = true;
-  
-    let key = floor(map(mouseY, height, 0, 0, notes.length));
-    playNote(notes[key]);
+    treeGrowSound.setVolume(0.3);
+    treeGrowSound.playMode('restart');
+    treeGrowSound.play();
   }
   count++;
 
@@ -154,5 +139,7 @@ function mousePressed() { //adds new branches every time the mouse is pressed
         flowers.push(flower);
       }
     }
+    treeDoneSound.setVolume(0.3);
+    treeDoneSound.play();
   }
 }
