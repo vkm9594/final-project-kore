@@ -39,10 +39,10 @@ function setup() {
   createCanvas(windowWidth - 2, windowHeight - 3);
   textFont("megrim");
 
-  var a = createVector(width / 2, height);
-  var b = createVector(width / 2, height - 200);
-  root = new Branch(a, b);
-  tree[0] = root;
+  // var a = createVector(width / 2, height);
+  // var b = createVector(width / 2, height - 200);
+  // root = new Branch(a, b);
+  // tree[0] = root;
 
   for (let i = 0; i < 500; i++) {
     stars[i] = new Star();
@@ -56,21 +56,14 @@ function gotResult(error, results) {
     console.log('ERROR');
   }
   if (results[0].label === 'go') {
-    // var a = createVector(width / 2, height);
-    // var b = createVector(width / 2, height - 200);
-    // root = new Branch(a, b);
-    // tree[0] = root;
-    // fill(240, 255, 244, fadeIn);
-    // fadeIn += 10;
-    // text("[Click the canvas until the tree is fully grown]", 100, height / 2 + 50);
-    // console.log(results[0].label, results[0].confidence)
-  }
-
-  if (results[0].label === 'up') {
-    for (let i = 0; i < flowers.length; i++) {
-      flowers[i].y += random(0, 3);
-      console.log(results[0].label, results[0].confidence);
-    }
+    var a = createVector(width / 2, height);
+    var b = createVector(width / 2, height - 200);
+    root = new Branch(a, b);
+    tree[0] = root;
+    fill(240, 255, 244, fadeIn);
+    fadeIn += 10;
+    text("[Click the canvas until the tree is fully grown]", 100, height / 2 + 50);
+    console.log(results[0].label, results[0].confidence)
   }
 }
 
@@ -104,16 +97,16 @@ function instructionScreen() {
 }
 
 function draw() {
-  // background(102);
-  // if (screen == 0) {
-  //   titleScreen();
-  // }
-
-  // if (screen == 1) {
-  //   instructionScreen();
-  // }
-
+  background(102);
   if (screen == 0) {
+    titleScreen();
+  }
+
+  if (screen == 1) {
+    instructionScreen();
+  }
+
+  if (screen == 2) {
     startColor = color(0, 145, 212);
     stopColor = color(247, 245, 163);
     verticalGradientRect(0, 0, windowWidth, windowHeight, startColor, stopColor);
