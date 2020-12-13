@@ -35,6 +35,11 @@ function setup() {
   createCanvas(windowWidth - 2, windowHeight - 3);
   textFont("megrim");
 
+  var a = createVector(width / 2, height);
+    var b = createVector(width / 2, height - 200);
+    root = new Branch(a, b);
+    tree[0] = root;
+
   for (let i = 0; i < 500; i++) {
     stars[i] = new Star();
   }
@@ -47,18 +52,18 @@ function gotResult(error, results) {
     console.log('ERROR');
   }
   if (results[0].label === 'go') {
-    var a = createVector(width / 2, height);
-    var b = createVector(width / 2, height - 200);
-    root = new Branch(a, b);
-    tree[0] = root;
-    console.log(results[0].label, results[0].confidence)
+    // var a = createVector(width / 2, height);
+    // var b = createVector(width / 2, height - 200);
+    // root = new Branch(a, b);
+    // tree[0] = root;
+    // console.log(results[0].label, results[0].confidence)
   } 
-  if (results[0].label === 'down') {
-    for (let i = 0; i < flowers.length; i++) {
-      flowers[i].y += random(0, 3);
-      console.log(results[0].label, results[0].confidence);
-    }
-  }
+  // if (results[0].label === 'down') {
+  //   for (let i = 0; i < flowers.length; i++) {
+  //     flowers[i].y += random(0, 3);
+  //     console.log(results[0].label, results[0].confidence);
+  //   }
+  // }
 }
 
 function windowResized() {
@@ -74,13 +79,27 @@ function titleScreen() {
     text("Press enter to begin", width / 2 - 135, height / 2 + 50);
 }
 
+function instructionScreen() {
+  textSize(24);
+  fill(255, 255, 255, fadeIn);
+  fadeIn++;
+  text("Instructions will be given in [brackets]", width / 2 - 200, height / 2 - 30);
+  text("Please make sure your microphone is on for this", width / 2 - 250, height / 2);
+  text("[press shift] and enjoy :)", width / 2 - 135, height / 2 + 60);
+}
+
 function draw() {
-  background(142, 188, 113);
+  // background(142, 188, 113);
+  background(102);
   if (screen == 0) {
     titleScreen();
   }
 
   if (screen == 1) {
+    instructionScreen();
+  }
+
+  if (screen == 2) {
     startColor = color(0, 145, 212);
     stopColor = color(247, 245, 163);
     verticalGradientRect(0, 0, windowWidth, windowHeight, startColor, stopColor);
@@ -105,8 +124,9 @@ function draw() {
 
     for (let i = 0; i < flowers.length; i++) {
       noStroke();
-      fill(255, 0, 100, 90);
-      ellipse(flowers[i].x, flowers[i].y, random(40, 60));
+      fill(255, 158, 200, 150);
+      ellipse(flowers[i].x, flowers[i].y, 40);
+      //flowers[i].y += random(0, 3);
     }
 
     addCharacter.update();
@@ -120,6 +140,9 @@ function keyPressed() {
     bgMusic.setVolume(0.1);
     bgMusic.play();
     bgMusic.loop();
+  }
+  if (keyCode === SHIFT) {
+    screen = 2;
   }
 }
 
