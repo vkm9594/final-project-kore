@@ -13,7 +13,7 @@ function verticalGradientRect(x, y, w, h, startColor, stopColor) { //gradient fo
   
   function moon() {
     noStroke();
-    fill(250, 250, 250);
+    fill(252, 252, 235);
     push();
     translate(210, 230);
     scale(2.5, 2.5);

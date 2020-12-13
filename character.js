@@ -1,21 +1,34 @@
 class Character {
     constructor() {
-        this.x = 0;
+        this.x = -1000;
         this.y = height / 2;
-        this.speed = 20;
+        this.speed = 5;
         this.fade = 0;
     }
 
-    update() {
-        if (this.x < width / 2 * 5) {
-            this.x += this.speed;
-        } else {
-            this.x = width / 2 * 5;
+    move() {
+        // if (this.x < width / 2 * 5) {
+        //     this.x += this.speed;
+        // } else {
+        //     this.x = width / 2 * 5;
+        //     fill(240, 255, 244, this.fade);
+        //     this.fade += 2;
+        //     noStroke();
+        //     text("[Say 'Go' until you see the trunk]", 100, height / 2 + 50);
+        //     text("[Then click to see the tree grow]", 100, height / 2 + 100);
+        // }
+        this.x += this.speed;
+        if(this.x > width / 2) {
             fill(240, 255, 244, this.fade);
             this.fade += 2;
             noStroke();
-            text("Grow! She shouts", 100, height / 2 + 50);
-            text("[Say 'Go' until you see the trunk]", 100, height / 2 + 100);
+            text("[Say 'Go' until you see the trunk]", 100, height / 2 + 50);
+            text("[Then click to see the tree grow]", 100, height / 2 + 100);
+        }
+
+        if(this.x > width * 6.5) {
+            this.x = -1000;
+            this.x += this.speed;
         }
 
         // let xoff = 0;

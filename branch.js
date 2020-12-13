@@ -9,7 +9,7 @@ class Branch {
     }
 
     show() {
-        stroke(255);
+        stroke(110);
         strokeWeight(this.thickness);
         line(this.begin.x, this.begin.y, this.end.x, this.end.y);
     }

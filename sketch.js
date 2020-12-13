@@ -60,14 +60,18 @@ function gotResult(error, results) {
     // var b = createVector(width / 2, height - 200);
     // root = new Branch(a, b);
     // tree[0] = root;
+    // fill(240, 255, 244, fadeIn);
+    // fadeIn += 10;
+    // text("[Click the canvas until the tree is fully grown]", 100, height / 2 + 50);
     // console.log(results[0].label, results[0].confidence)
   }
-  // if (results[0].label === 'down') {
-  //   for (let i = 0; i < flowers.length; i++) {
-  //     flowers[i].y += random(0, 3);
-  //     console.log(results[0].label, results[0].confidence);
-  //   }
-  // }
+  
+  if (results[0].label === 'up') {
+    for (let i = 0; i < flowers.length; i++) {
+      flowers[i].y += random(0, 3);
+      console.log(results[0].label, results[0].confidence);
+    }
+  }
 }
 
 function windowResized() {
@@ -78,6 +82,10 @@ function titleScreen() {
   // loadImage(plants[0], 400, height);
   // loadImage(plants[1], width /2, height);
   textSize(150);
+  stroke(142, 188, 113);
+  strokeWeight(5);
+  line(mouseX, mouseY, pmouseX, pmouseY);
+  noStroke();
   fill(255, 255, 255, fadeIn);
   fadeIn++;
   text("Kore", width / 2 - 180, height / 2);
@@ -117,7 +125,7 @@ function draw() {
 
     fill(240, 255, 244, fadeIn);
     fadeIn++;
-    text("Lost at sea with no trees", 50, height / 2);
+    text("Alone at sea with no trees", 50, height / 2);
 
     // draws the waves
     wave1();
@@ -131,20 +139,11 @@ function draw() {
     for (let i = 0; i < flowers.length; i++) {
       noStroke();
       fill(255, 158, 200, 150);
-      ellipse(flowers[i].x, flowers[i].y, 40);
-      let x = 100;
-      let dx = random(-1, 1);
-      x += dx;
-      if (mouseX !== 0) {
-        flowers[i].x = mouseX - x;
-        flowers[i].y += random(2, 5);
-        x = x - dx / 2;
-      }
-
-      //flowers[i].y += random(0, 3);
+      ellipse(flowers[i].x + random(4), flowers[i].y, 40);
+      // flowers[i].y += random(0, 3);
     }
 
-    addCharacter.update();
+    addCharacter.move();
     addCharacter.show();
   }
 }
@@ -183,6 +182,8 @@ function mousePressed() { //adds new branches every time the mouse is pressed
       }
       treeDoneSound.setVolume(0.3);
       treeDoneSound.play();
+      // fill(240, 255, 244);
+      // text("Wow! A tree! And she continued to sail", width - 500, height / 2);
     }
   }
 }
