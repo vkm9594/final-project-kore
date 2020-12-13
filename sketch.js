@@ -30,7 +30,7 @@ function preload() {
   };
   soundClassifier = ml5.soundClassifier('SpeechCommands18w', options, setup);
   kore = loadImage("images/kore.gif");
-  boat = loadImage("images/boat.png")
+  boat = loadImage("images/boat.png");
   screen = 0;
 }
 
@@ -65,7 +65,7 @@ function gotResult(error, results) {
     // text("[Click the canvas until the tree is fully grown]", 100, height / 2 + 50);
     // console.log(results[0].label, results[0].confidence)
   }
-  
+
   if (results[0].label === 'up') {
     for (let i = 0; i < flowers.length; i++) {
       flowers[i].y += random(0, 3);
@@ -79,12 +79,13 @@ function windowResized() {
 }
 
 function titleScreen() {
-  // loadImage(plants[0], 400, height);
-  // loadImage(plants[1], width /2, height);
+  push();
+  scale(0.8);
+  image(plants[0], 0, 100);
+  scale(1);
+  image(plants[1], width - 100, height - 200);
+  pop();
   textSize(150);
-  stroke(142, 188, 113);
-  strokeWeight(5);
-  line(mouseX, mouseY, pmouseX, pmouseY);
   noStroke();
   fill(255, 255, 255, fadeIn);
   fadeIn++;
@@ -103,8 +104,7 @@ function instructionScreen() {
 }
 
 function draw() {
-  // background(142, 188, 113);
-  background(102);
+  // background(102);
   // if (screen == 0) {
   //   titleScreen();
   // }
@@ -125,7 +125,7 @@ function draw() {
 
     fill(240, 255, 244, fadeIn);
     fadeIn++;
-    text("Alone at sea with no trees", 50, height / 2);
+    text("Alone at sea...", 50, height / 2);
 
     // draws the waves
     wave1();
@@ -137,10 +137,17 @@ function draw() {
     }
 
     for (let i = 0; i < flowers.length; i++) {
+      push();
       noStroke();
       fill(255, 158, 200, 150);
-      ellipse(flowers[i].x + random(4), flowers[i].y, 40);
-      // flowers[i].y += random(0, 3);
+      arc(flowers[i].x + random(-2, 2), flowers[i].y, 50, 50, 5*PI / 6, 0, PIE);
+      frameRate(20);
+      rotate(random(0, PI));
+      arc(flowers[i].x, flowers[i].y, 40, 40, 0, PI + QUARTER_PI, PIE);
+      pop();
+      // let dy = 0;
+      // dy += random(0.25, 1.5);
+      // flowers[i].y += random(10, 20) * dy;
     }
 
     addCharacter.move();
@@ -152,6 +159,7 @@ function keyPressed() {
   if (keyCode === ENTER) {
     screen = 1;
     bgMusic.setVolume(0.1);
+    bgMusic.playMode('restart');
     bgMusic.play();
     bgMusic.loop();
   }
@@ -173,6 +181,7 @@ function mousePressed() { //adds new branches every time the mouse is pressed
       treeGrowSound.play();
     }
     count++;
+
     if (count === 8) {
       for (let i = 0; i < tree.length; i++) {
         if (!tree[i].finished) {
@@ -182,8 +191,6 @@ function mousePressed() { //adds new branches every time the mouse is pressed
       }
       treeDoneSound.setVolume(0.3);
       treeDoneSound.play();
-      // fill(240, 255, 244);
-      // text("Wow! A tree! And she continued to sail", width - 500, height / 2);
     }
   }
 }
