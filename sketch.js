@@ -15,9 +15,13 @@ let kore;
 let boat;
 let soundClassifier;
 var count = 0;
+let plants = [];
 
 function preload() {
   soundFormats('ogg', 'mp3');
+  for (i = 0; i < 2; i++) {
+    plants[i] = loadImage("images/plant" + i + ".gif");
+  }
   bgMusic = loadSound("sounds/background-music.mp3");
   treeGrowSound = loadSound("sounds/tree-growing.mp3");
   treeDoneSound = loadSound("sounds/tree-grown.mp3");
@@ -36,9 +40,9 @@ function setup() {
   textFont("megrim");
 
   var a = createVector(width / 2, height);
-    var b = createVector(width / 2, height - 200);
-    root = new Branch(a, b);
-    tree[0] = root;
+  var b = createVector(width / 2, height - 200);
+  root = new Branch(a, b);
+  tree[0] = root;
 
   for (let i = 0; i < 500; i++) {
     stars[i] = new Star();
@@ -57,7 +61,7 @@ function gotResult(error, results) {
     // root = new Branch(a, b);
     // tree[0] = root;
     // console.log(results[0].label, results[0].confidence)
-  } 
+  }
   // if (results[0].label === 'down') {
   //   for (let i = 0; i < flowers.length; i++) {
   //     flowers[i].y += random(0, 3);
@@ -71,12 +75,14 @@ function windowResized() {
 }
 
 function titleScreen() {
+  // loadImage(plants[0], 400, height);
+  // loadImage(plants[1], width /2, height);
   textSize(150);
-    fill(255, 255, 255, fadeIn);
-    fadeIn++;
-    text("Kore", width / 2 - 180, height / 2);
-    textSize(24);
-    text("Press enter to begin", width / 2 - 135, height / 2 + 50);
+  fill(255, 255, 255, fadeIn);
+  fadeIn++;
+  text("Kore", width / 2 - 180, height / 2);
+  textSize(24);
+  text("Press enter to begin", width / 2 - 135, height / 2 + 50);
 }
 
 function instructionScreen() {
@@ -91,15 +97,15 @@ function instructionScreen() {
 function draw() {
   // background(142, 188, 113);
   background(102);
+  // if (screen == 0) {
+  //   titleScreen();
+  // }
+
+  // if (screen == 1) {
+  //   instructionScreen();
+  // }
+
   if (screen == 0) {
-    titleScreen();
-  }
-
-  if (screen == 1) {
-    instructionScreen();
-  }
-
-  if (screen == 2) {
     startColor = color(0, 145, 212);
     stopColor = color(247, 245, 163);
     verticalGradientRect(0, 0, windowWidth, windowHeight, startColor, stopColor);
@@ -126,6 +132,15 @@ function draw() {
       noStroke();
       fill(255, 158, 200, 150);
       ellipse(flowers[i].x, flowers[i].y, 40);
+      let x = 100;
+      let dx = random(-1, 1);
+      x += dx;
+      if (mouseX !== 0) {
+        flowers[i].x = mouseX - x;
+        flowers[i].y += random(2, 5);
+        x = x - dx / 2;
+      }
+
       //flowers[i].y += random(0, 3);
     }
 
@@ -147,27 +162,27 @@ function keyPressed() {
 }
 
 function mousePressed() { //adds new branches every time the mouse is pressed
-  for (let i = tree.length - 1; i >= 0; i--) {
-    if (!tree[i].finished) {
-      tree.push(tree[i].branchA());
-      tree.push(tree[i].branchB());
-      //console.log(tree[i]);
-    }
-    tree[i].finished = true;
-    treeGrowSound.setVolume(0.3);
-    treeGrowSound.playMode('restart');
-    treeGrowSound.play();
-  }
-  count++;
-
-  if (count === 8) {
-    for (let i = 0; i < tree.length; i++) {
+  if (count < 8) {
+    for (let i = tree.length - 1; i >= 0; i--) {
       if (!tree[i].finished) {
-        let flower = tree[i].end.copy();
-        flowers.push(flower);
+        tree.push(tree[i].branchA());
+        tree.push(tree[i].branchB());
       }
+      tree[i].finished = true;
+      treeGrowSound.setVolume(0.3);
+      treeGrowSound.playMode('restart');
+      treeGrowSound.play();
     }
-    treeDoneSound.setVolume(0.3);
-    treeDoneSound.play();
+    count++;
+    if (count === 8) {
+      for (let i = 0; i < tree.length; i++) {
+        if (!tree[i].finished) {
+          let flower = tree[i].end.copy();
+          flowers.push(flower);
+        }
+      }
+      treeDoneSound.setVolume(0.3);
+      treeDoneSound.play();
+    }
   }
 }

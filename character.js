@@ -12,9 +12,10 @@ class Character {
         } else {
             this.x = width / 2 * 5;
             fill(240, 255, 244, this.fade);
-            this.fade++;
+            this.fade += 2;
             noStroke();
             text("Grow! She shouts", 100, height / 2 + 50);
+            text("[Say 'Go' until you see the trunk]", 100, height / 2 + 100);
         }
 
         // let xoff = 0;
