@@ -2,7 +2,8 @@ class Character {
     constructor() {
         this.x = 0;
         this.y = height / 2;
-        this.speed = 5;
+        this.speed = 20;
+        this.fade = 0;
     }
 
     update() {
@@ -10,9 +11,9 @@ class Character {
             this.x += this.speed;
         } else {
             this.x = width / 2 * 5;
-
-            fill(208, 242, 217, fadeIn);
-            fadeIn++;
+            fill(240, 255, 244, this.fade);
+            this.fade++;
+            noStroke();
             text("Grow! She shouts", 100, height / 2 + 50);
         }
 
@@ -28,7 +29,7 @@ class Character {
     show() {
         push();
         scale(0.2);
-        image(sprite, this.x + 200, this.y * 4.12);
+        image(kore, this.x + 200, this.y * 4.12);
         pop();
 
         push();

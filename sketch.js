@@ -10,8 +10,8 @@ var yoff = 0.0;
 let root;
 let tree = [];
 let flowers = [];
+let addCharacter;
 let kore;
-let sprite;
 let boat;
 let soundClassifier;
 var count = 0;
@@ -25,7 +25,7 @@ function preload() {
     probabilityThreshold: 0.9
   };
   soundClassifier = ml5.soundClassifier('SpeechCommands18w', options, setup);
-  sprite = loadImage("images/kore.gif");
+  kore = loadImage("images/kore.gif");
   boat = loadImage("images/boat.png")
   screen = 0;
 }
@@ -38,7 +38,7 @@ function setup() {
   for (let i = 0; i < 500; i++) {
     stars[i] = new Star();
   }
-  kore = new Character();
+  addCharacter = new Character();
   soundClassifier.classify(gotResult);
 }
 
@@ -65,15 +65,19 @@ function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
 
-function draw() {
-  background(142, 188, 113);
-  if (screen == 0) {
-    textSize(150);
+function titleScreen() {
+  textSize(150);
     fill(255, 255, 255, fadeIn);
     fadeIn++;
     text("Kore", width / 2 - 180, height / 2);
     textSize(24);
     text("Press enter to begin", width / 2 - 135, height / 2 + 50);
+}
+
+function draw() {
+  background(142, 188, 113);
+  if (screen == 0) {
+    titleScreen();
   }
 
   if (screen == 1) {
@@ -86,8 +90,8 @@ function draw() {
       stars[i].show();
     }
 
-    fill(208, 242, 217, fadeIn);
-    fadeIn += 0.5;
+    fill(240, 255, 244, fadeIn);
+    fadeIn++;
     text("Lost at sea with no trees", 50, height / 2);
 
     // draws the waves
@@ -100,12 +104,13 @@ function draw() {
     }
 
     for (let i = 0; i < flowers.length; i++) {
-      fill(255, 0, 100);
-      ellipse(flowers[i].x, flowers[i].y, 10, 10);
+      noStroke();
+      fill(255, 0, 100, 90);
+      ellipse(flowers[i].x, flowers[i].y, random(40, 60));
     }
 
-    kore.update();
-    kore.show();
+    addCharacter.update();
+    addCharacter.show();
   }
 }
 
