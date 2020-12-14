@@ -146,6 +146,11 @@ function draw() {
     addCharacter.move();
     addCharacter.show();
   }
+
+  // if(screen == 3) {
+  //   background(102);
+  //   text("restart?", width / 2, height / 2);
+  // }
 }
 
 function keyPressed() {
@@ -158,6 +163,10 @@ function keyPressed() {
   }
   if (keyCode === SHIFT) {
     screen = 2;
+  }
+
+  if(keyCode === BACKSPACE) {
+    restart();
   }
 }
 
@@ -186,4 +195,8 @@ function mousePressed() { //adds new branches every time the mouse is pressed
       treeDoneSound.play();
     }
   }
+}
+
+function restart() {
+  screen = 1;
 }
