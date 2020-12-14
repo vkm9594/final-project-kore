@@ -8,20 +8,10 @@ class Character {
     }
 
     move() {
-        // if (this.x < width / 2 * 5) {
-        //     this.x += this.speed;
-        // } else {
-        //     this.x = width / 2 * 5;
-        //     fill(240, 255, 244, this.fade);
-        //     this.fade += 2;
-        //     noStroke();
-        //     text("[Say 'Go' until you see the trunk]", 100, height / 2 + 50);
-        //     text("[Then click to see the tree grow]", 100, height / 2 + 100);
-        // }
         this.x += this.speed;
-        if(this.x > 20) {
+        if(this.x > 0) {
             fill(240, 255, 244, this.fade);
-            this.fade += 3;
+            this.fade += 5;
             noStroke();
             text("[Say 'Go' until you see the trunk]", width - 400, height / 2 + 50);
             text("[Then click to see the tree grow]", width - 400, height / 2 + 100);

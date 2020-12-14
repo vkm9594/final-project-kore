@@ -26,7 +26,7 @@ function preload() {
   treeGrowSound = loadSound("sounds/tree-growing.mp3");
   treeDoneSound = loadSound("sounds/tree-grown.mp3");
   const options = {
-    probabilityThreshold: 0.9
+    probabilityThreshold: 0.001
   };
   soundClassifier = ml5.soundClassifier('SpeechCommands18w', options, setup);
   kore = loadImage("images/kore.gif");
