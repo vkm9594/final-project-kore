@@ -2,13 +2,13 @@ class Character {
     constructor() {
         this.x = -1000;
         this.y = height / 2;
-        this.speed = 2.5;
+        this.speed = 3;
         this.fade = 0;
     }
 
     move() {
         this.x += this.speed;
-        if(this.x > -300) {
+        if(this.x > -400) {
             fill(240, 255, 244, this.fade);
             this.fade += 5;
             noStroke();
@@ -17,9 +17,9 @@ class Character {
         }
 
         if(this.x > width * 6.5) {
-            this.x = -1000;
-            this.x += this.speed;
-            // screen = 3;
+            // this.x = -1000;
+            // this.x += this.speed;
+            screen = 3;
         }
 
         // let xoff = 0;

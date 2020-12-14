@@ -133,7 +133,7 @@ function draw() {
       push();
       noStroke();
       fill(255, 158, 200, 150);
-      arc(flowers[i].x + random(-2, 2), flowers[i].y, 50, 50, 5*PI / 6, 0, PIE);
+      arc(flowers[i].x + random(-2, 2), flowers[i].y, 50, 50, 5 * PI / 6, 0, PIE);
       frameRate(20);
       rotate(random(0, PI));
       arc(flowers[i].x, flowers[i].y, 40, 40, 0, PI + QUARTER_PI, PIE);
@@ -147,10 +147,17 @@ function draw() {
     addCharacter.show();
   }
 
-  // if(screen == 3) {
-  //   background(102);
-  //   text("restart?", width / 2, height / 2);
-  // }
+  if (screen == 3) {
+    background(102);
+    push();
+    scale(0.8);
+    image(plants[0], 0, 100);
+    scale(1);
+    image(plants[1], width - 100, height - 200);
+    pop();
+    textSize(150);
+    text("The end", width / 2 - 230, height / 2 - 10);
+  }
 }
 
 function keyPressed() {
@@ -163,10 +170,6 @@ function keyPressed() {
   }
   if (keyCode === SHIFT) {
     screen = 2;
-  }
-
-  if(keyCode === BACKSPACE) {
-    restart();
   }
 }
 
@@ -197,6 +200,7 @@ function mousePressed() { //adds new branches every time the mouse is pressed
   }
 }
 
-function restart() {
-  screen = 1;
-}
+// function restart() {
+//   screen = 1;
+//   count = 0;
+// }
