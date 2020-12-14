@@ -88,12 +88,12 @@ function titleScreen() {
 }
 
 function instructionScreen() {
-  textSize(24);
+  textSize(36);
   fill(255, 255, 255, fadeIn);
   fadeIn++;
-  text("Instructions will be given in [brackets]", width / 2 - 200, height / 2 - 30);
-  text("Please make sure your microphone is on for this", width / 2 - 250, height / 2);
-  text("[press shift] and enjoy :)", width / 2 - 135, height / 2 + 60);
+  text("Instructions will be given in [brackets]", width / 2 - 310, height / 2 - 60);
+  text("Please make sure your microphone is on for this", width / 2 - 400, height / 2);
+  text("[press shift] and enjoy :)", width / 2 - 200, height / 2 + 80);
 }
 
 function draw() {
@@ -116,6 +116,7 @@ function draw() {
       stars[i].show();
     }
 
+    textSize(30);
     fill(240, 255, 244, fadeIn);
     fadeIn++;
     text("Alone at sea...", 50, height / 2);

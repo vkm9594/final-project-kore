@@ -2,7 +2,7 @@ class Character {
     constructor() {
         this.x = -1000;
         this.y = height / 2;
-        this.speed = 3;
+        this.speed = 4;
         this.fade = 0;
     }
 
@@ -12,8 +12,8 @@ class Character {
             fill(240, 255, 244, this.fade);
             this.fade += 5;
             noStroke();
-            text("[Say 'Go' until you see the trunk]", width - 400, height / 2 + 50);
-            text("[Then click to see the tree grow]", width - 400, height / 2 + 100);
+            text("[Say 'Go' until you see the trunk]", width / 2 + 20, height - 80);
+            text("[Then click until the tree is fully grown]", width / 2 + 20, height - 40);
         }
 
         if(this.x > width * 6.5) {
